@@ -1,1 +1,10 @@
 @import './common';
+
+@import './utils/mixins';
+@import './utils/variables';
+
+@import './base/reset-basis';
+@import './base/container';
+
+@import './components/btns';
+@import './components/header';
