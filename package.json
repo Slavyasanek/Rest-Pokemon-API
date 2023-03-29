@@ -2,14 +2,14 @@
   "name": "rest-Pokemon-api",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://Slavyasanek.github.io/Rest-Pokemon-API",
+  "homepage": "https://Slavyasanek.github.io/Rest-Pokemon-Api",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "parcel build src/*.html --public-url /Rest-Pokemon-API/"
+    "build": "parcel build src/*.html --public-url /Rest-Pokemon-Api/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Slavyasanek/Rest-Pokemon-API.git"
+    "url": "git+https://github.com/Slavyasanek/Rest-Pokemon-Api.git"
   },
   "keywords": [],
   "author": "Alexander Repeta <alexander.repeta@gmail.com>",
