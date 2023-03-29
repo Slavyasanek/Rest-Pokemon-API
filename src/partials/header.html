@@ -1,13 +1,24 @@
 <header class="header">
-    <div class="container">
+    <div class="container header--flex">
         <div class="header__logo">
-            <svg>
+            <svg width="200" height="80">
                 <use href="./images/icons.svg#icon-logo"></use>
             </svg>
         </div>
-        <div class="header__search">
-            <input type="text" class="">
-            <select name="search" id="search"></select>
-        </div>
+        <form class="header__search">
+            <div>
+                <input type="text" class="header__input" placeholder="Searching...">
+                <select name="search" id="search" class="header__select">
+                    <option value="name">Name</option>
+                    <option value="ability">Ability</option>
+                    <option value="gender">Gender</option>
+                </select>
+            </div>
+            <button class="header__btn">
+                <svg width="30" height="30">
+                    <use href="./images/icons.svg#icon-search"></use>
+                </svg>
+            </button>
+        </form>
     </div>
 </header>
