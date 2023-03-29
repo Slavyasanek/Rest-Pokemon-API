@@ -3,11 +3,12 @@ import './js/randomNum';
 import './js/renderGallery';
 import NiceSelect from 'nice-select2/src/js/nice-select2';
 
-const selectItem = document.querySelector('.header__select')
 
-const renderSelect = (select) => {
-    if (select) {
-        NiceSelect.bind(select, {
+
+const renderSelect = () => {
+    const selectItem = document.querySelector('.header__select')
+    if (selectItem) {
+        return NiceSelect.bind(selectItem, {
             searchable: true, // false
             placeholder: 'select',
             searchtext: '...',
@@ -16,4 +17,4 @@ const renderSelect = (select) => {
     }
 }
 
-renderSelect(selectItem)
+renderSelect();

@@ -5,15 +5,37 @@
   min-width: 320px;
   box-shadow: 0px 18px 179px -33px $darkestYellow,
     inset 0px 18px 179px -33px rgba(0, 115, 196, 1);
+  &__logo {
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    &:hover {
+      transform: scale(1.1);
+    }
+    @include min_1440 {
+        & > svg {
+            width: 300px;
+            height: 120px;            
+        }
+    }
+  }
   &--flex {
     display: flex;
     align-items: center;
-    flex-direction: column;
+    @include max_767 {
+      flex-direction: column;
+    }
+    @include min_768 {
+        justify-content: space-between;
+    }
   }
   &__search {
     display: flex;
     @include max_767 {
       margin-top: 20px;
+    }
+    &-item {
+        @include min_1024 {
+            display: flex;
+        }
     }
   }
   &__input,
@@ -32,7 +54,19 @@
       color: $darkestYellow;
     }
     &:focus-within {
-        border-color: $blueBcgLightest;
+      border-color: $blueBcgLightest;
+    }
+    @include min_1024 {
+        width: 250px;
+        font-size: 16px;
+        height: 50px;
+    }
+    @include min_1440 {
+        height: 60px;
+        padding-left: 20px;
+        padding-right: 20px;
+        width: 300px;
+        font-size: 20px;
     }
   }
   &__select {
@@ -45,10 +79,26 @@
   }
   &__btn {
     background-color: $darkestBlueDecorative;
-    border: none;
+    border: 2px solid transparent;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
     & > svg {
       fill: $lightBcgYellow;
+    }
+    &:hover,
+    &:focus,
+    &:active {
+      background-color: $lightBcgYellow;
+      border: 2px solid $darkestBlueDecorative;
+      & > svg {
+        fill: $darkestBlueDecorative;
+      }
+    }
+    @include min_1440 {
+        width: 100px;
     }
   }
 }
