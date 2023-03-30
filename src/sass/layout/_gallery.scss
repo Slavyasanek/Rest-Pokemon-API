@@ -1,0 +1,131 @@
+.gallery {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  &--flex {
+    display: flex;
+    flex-direction: column;
+  }
+  &__btn {
+    width: 250px;
+    align-self: center;
+    margin-bottom: 30px;
+    @include min_1440 {
+      width: 300px;
+    }
+  }
+  &__pokemons {
+    display: flex;
+    width: 100%;
+    @include max_767 {
+        flex-direction: column;
+        gap: 10px;
+    }
+    @include min_768 {
+        flex-wrap: wrap;
+        margin: -5px;
+    }
+  }
+}
+
+.card {
+  width: 100%;
+  background-color: $cardBcg;
+  box-shadow: 0px 16px 64px -24px $darkestYellow,
+    inset 0px 16px 64px -24px $sunnyYellow;
+  padding: 15px;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  @include min_768 {
+    width: calc((100% - 4 * 5px) / 2);
+    margin: 5px;
+  }
+  @include min_1024 {
+    width: calc((100% - 6 * 5px) / 3);
+  }
+  @include min_1440 {
+    padding: 20px;
+  }
+  &__thumb {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+  }
+  &__image {
+    @include min_768 {
+        width: 120px;
+    }
+  }
+  &__name {
+    text-transform: capitalize;
+    color: $darkestBlueDecorative;
+    margin-bottom: 5px;
+    @include min_1024 {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+  }
+  &__title {
+    font-size: 18px;
+    color: $greyBlue;
+    margin-bottom: 5px;
+    @include min_1440 {
+        font-size: 23px;
+    }
+  }
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    &:not(:last-child) {
+        margin-bottom: 5px;
+        @include min_1440 {
+            margin-bottom: 10px;
+        }
+    }
+    @include min_1024 {
+        gap: 8px;
+    }
+  }
+  &__item {
+    color: $darkestYellow;
+    @include min_1024 {
+        font-size: 18px;
+    }
+    @include min_1440 {
+        font-size: 20px;
+    }
+  }
+  &__type {
+    border-radius: 4px;
+    width: min-content;
+    padding: 4px;
+    @include min_1024 {
+        font-size: 18px;
+    }
+  }
+  &__btn {
+    width: 100px;
+    height: 50px;
+    font-size: 16px;
+    padding: 5px;
+    align-self: center;
+    margin-top: 20px;
+    &:hover, &:focus, &:active {
+        transform: scale(1.06);
+    }
+    @include min_1024 {
+        width: 150px;
+        font-size: 20px;
+    }
+  }
+  &__warn {
+    font-size: 20px;
+    width: 90px;
+    color: $greyYellow;
+    overflow-wrap: break-word;
+  }
+}
+
