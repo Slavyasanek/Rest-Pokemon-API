@@ -127,6 +127,12 @@
     width: 90px;
     color: $greyYellow;
     overflow-wrap: break-word;
+    @include min_1024 {
+      width: 100px;
+    }
+    @include min_1440 {
+      width: 140px;
+    }
   }
 }
 
