@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const URL_FOR_POKEMON = 'https://pokeapi.co/api/v2/pokemon';
 const URL_FOR_ABILITY = 'https://pokeapi.co/api/v2/ability';
+const URL_FOR_TYPE = 'https://pokeapi.co/api/v2/type';
 
 
 const fetchPokemons = async (limitNum, offsetNum) => {
@@ -32,5 +33,10 @@ const fetchAbility = async (abilityName) => {
     return response.data
 }
 
-fetchAbilities().then(r => console.log(r))
-export {fetchPokemons, fetchOnePokemon, fetchAbility, fetchAbilities};
+const fetchType = async (typeName) => {
+    const response = await axios.get(`${URL_FOR_TYPE}/${typeName}`);
+    return response.data;
+}
+
+fetch('https://pokeapi.co/api/v2/type/poison').then(r => r.json()).then(r => console.log(r));
+export {fetchPokemons, fetchOnePokemon, fetchAbility, fetchAbilities, fetchType };
