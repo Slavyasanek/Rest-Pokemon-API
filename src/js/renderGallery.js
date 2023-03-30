@@ -1,9 +1,4 @@
-import { fetchOnePokemon, fetchPokemons } from "./fetch";
-import { getRandomNum } from "./randomNum";
-const pokemonsGallery = document.querySelector('.gallery__pokemons');
-const btnRandomPokemons = document.querySelector('.gallery__btn')
-
-const renderGallery = ({ id, name, sprites, abilities, types }) => {
+export const renderGallery = ({ id, name, sprites, abilities, types }) => {
     const abilitiesList = abilities.map(({ ability }) => `<li class="card__item">&#9734;${ability.name}</li>`).join("");
     const typesList = types.map(({ type }) => `<li class="card__type" data-type="${type.name}">${type.name}</li>`).join("");
     let poky = `<li class="card" data-pokemon="${id}"><div class="card__thumb"><div class="card__images">`;
@@ -31,28 +26,3 @@ const renderGallery = ({ id, name, sprites, abilities, types }) => {
     </li>`;
     return poky;
 }
-
-const getPokys = async (offsetNum) => {
-    fetchPokemons(20, offsetNum)
-        .then(r => {
-            console.log(r.results)
-            r.results.map(({ name }) => {
-                fetchOnePokemon(name).then(d => {
-                    const post = renderGallery(d);
-                    pokemonsGallery.insertAdjacentHTML("beforeend", post)
-                }).catch(e => console.log(e))
-            })
-        });
-}
-
-window.addEventListener("load", () => {
-    const page = getRandomNum(1000, 1)
-    console.log(page);
-    getPokys(page)
-})
-
-btnRandomPokemons.addEventListener("click", () => {
-    pokemonsGallery.innerHTML = "";
-    const page = getRandomNum(1000, 1);
-    getPokys(page)
-})
