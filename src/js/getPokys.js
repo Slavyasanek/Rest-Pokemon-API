@@ -8,7 +8,6 @@ const btnRandomPokemons = document.querySelector('.gallery__btn')
 const getPokys = async (offsetNum) => {
     fetchPokemons(21, offsetNum)
         .then(r => {
-            console.log(r.results)
             r.results.map(({ name }) => {
                 fetchOnePokemon(name).then(d => {
                     const post = renderGallery(d);
@@ -20,7 +19,6 @@ const getPokys = async (offsetNum) => {
 
 window.addEventListener("load", () => {
     const page = getRandomNum(1200, 1)
-    console.log(page);
     getPokys(page)
 })
 
