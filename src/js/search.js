@@ -1,16 +1,23 @@
-import { fetchOnePokemon, fetchPokemons, fetchAbility, fetchAbilities } from "./fetch";
+import { fetchOnePokemon, fetchPokemons, fetchAbility, fetchAbilities, fetchType } from "./fetch";
 import { pokemonsGallery } from "./getPokys";
 import { tooMuchPokemonsFound, noSuccess, successFind, errorNotify, infoAbility } from "./alerts";
 import { renderGallery } from "./renderGallery";
+import Notiflix from "notiflix";
+import throttle from "lodash.throttle";
 
 const searchForm = document.querySelector('.header__search');
+
+let shouldLoad = true;
+let totalFounds;
+let firstElFound = 0;
+let lastElFound = 19;
 
 const searchByName = () => {
     fetchPokemons(1280, 1)
         .then(({ results }) => {
             let similiarFounds = [];
             results.forEach(({ name }) => {
-                if (name.includes(searchForm.string.value)) {
+                if (name.includes(searchForm.string.value.toLowerCase())) {
                     similiarFounds.push(name)
                 }
             })
@@ -36,7 +43,7 @@ const searchByName = () => {
                 }).catch(e => errorNotify())
             }
         }
-        );
+    );
 }
 
 const searchByAbility = () => {
@@ -66,7 +73,7 @@ const searchByAbility = () => {
                     tooMuchPokemonsFound();
                     return;
                 } else {
-                    infoAbility(similiarFounds.join(", "));
+                    infoAbility(pokemonsFound.length, similiarFounds.join(", "));
                     pokemonsGallery.innerHTML = "";
                     const pokieNames = pokemonsFound.map(pokie => pokie.pokemon.name);
                     pokieNames.forEach(pokie => {
@@ -81,10 +88,64 @@ const searchByAbility = () => {
 
         }
     })
+}
 
-    // fetchAbility(searchForm.string.value)
-    // .then(({pokemon}) => console.log(pokemon))
-    // .catch( e => noSuccess())
+
+const loadMore = (array) => {
+    const heightOfBody = document.body.offsetHeight;
+    const screenHeight = window.innerHeight;
+    const scrolled = window.pageYOffset;
+
+    const thershold = scrolled + screenHeight;
+
+    if (thershold >= heightOfBody && shouldLoad) {
+        totalFounds -=1;
+        if (totalFounds === 0) {
+            shouldLoad = false;
+            console.log('this is end');
+            endOfLoad();
+            return;
+        } else {
+            array.slice(firstElFound + 20, lastElFound + 20).forEach(poke => {
+                fetchOnePokemon(poke.pokemon.name)
+                .then(data => {
+                    shouldLoad = true;
+                    const post = renderGallery(data);
+                    pokemonsGallery.insertAdjacentHTML("beforeend", post);
+                }).catch(e => noSuccess())
+            })
+        }
+    }
+}
+
+const endOfLoad = () => {
+    window.removeEventListener("scroll", throttle(() => loadMore(), 1000));
+    return Notiflix.Notify.info(
+        `That's all we were able to found. Hope we helped you!`,
+        {
+            cssAnimationStyle: 'zoom',
+            timeout: 2000,
+        });
+}
+
+export const searchByType = () => {
+    fetchType(searchForm.string.value.toLowerCase())
+    .then(r => {
+        pokemonsGallery.innerHTML = "";
+        const pokeTypes = r.pokemon;
+        successFind(pokeTypes.length);
+        if (pokeTypes.length > 20) {
+            totalFounds = Math.ceil((pokeTypes.length / 20) - 1);
+            window.addEventListener("scroll", throttle(() => loadMore(pokeTypes), 1000));
+        }
+        pokeTypes.slice(firstElFound, lastElFound).forEach(poke => {
+            fetchOnePokemon(poke.pokemon.name)
+            .then(data => {
+                const post = renderGallery(data);
+                pokemonsGallery.insertAdjacentHTML("beforeend", post);
+            }).catch(e => noSuccess())
+        })
+    }).catch(e => noSuccess())
 }
 
 const searchPokys = (event) => {
@@ -94,9 +155,9 @@ const searchPokys = (event) => {
         searchByName();
     } else if (curOption === 'ability') {
         searchByAbility();
+    } else if (curOption === 'type') {
+        searchByType();
     }
 }
-
-// searchPokys()
 
 searchForm.addEventListener("submit", searchPokys)
