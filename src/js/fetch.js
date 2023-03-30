@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-const URL_FOR_RANDOM = 'https://pokeapi.co/api/v2/pokemon/';
 const URL_FOR_POKEMON = 'https://pokeapi.co/api/v2/pokemon';
 
 const fetchPokemons = async (limitNum, offsetNum) => {
@@ -8,7 +7,7 @@ const fetchPokemons = async (limitNum, offsetNum) => {
         limit: limitNum,
         offset: offsetNum
     })
-    const response = await axios.get(`${URL_FOR_RANDOM}?${searchFilters}`);
+    const response = await axios.get(`${URL_FOR_POKEMON}/?${searchFilters}`);
     return response.data
 }
 
@@ -19,6 +18,6 @@ const fetchOnePokemon = async (name) => {
 
 // fetchPokemons(20, 20).then(r => console.log(r.results))
 
-// fetchOnePokemon('ditto').then(r => console.log(r))
+fetchOnePokemon('slurpuff').then(r => console.log(r))
 
 export {fetchPokemons, fetchOnePokemon};
