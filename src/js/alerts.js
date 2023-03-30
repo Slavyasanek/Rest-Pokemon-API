@@ -18,7 +18,7 @@ const successFind = (amount) => {
         });
 }
 
-const tooMuchFound = () => {
+const tooMuchPokemonsFound = () => {
     return Notify.warning(
         `Sorry, we have found too much pokemons. Write more specific query`,
         {
@@ -27,5 +27,29 @@ const tooMuchFound = () => {
         });
 }
 
+const errorNotify = () => {
+    return Notify.failure(
+        'Something went wrong',
+        {
+            timeout: 2000,
+            cssAnimationStyle: 'zoom',
+        });
+}
 
-export {noSucces, successFind, tooMuchFound};
+Notiflix.Notify.init({
+    info: {
+        background: '#f8ed62',
+        textColor: '#a98600',
+    },
+})
+
+const infoAbility = (abilities) => {
+    return Notiflix.Notify.info(
+        `We found pokemons with ${abilities} abilities`,
+        {
+            cssAnimationStyle: 'zoom',
+            closeButton: true,
+        });
+}
+
+export { noSuccess, successFind, tooMuchPokemonsFound, errorNotify, infoAbility };
