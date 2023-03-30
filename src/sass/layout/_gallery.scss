@@ -73,6 +73,7 @@
     margin-bottom: 5px;
     @include min_1440 {
         font-size: 23px;
+        margin-bottom: 8px;
     }
   }
   &__list {
