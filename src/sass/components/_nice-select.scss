@@ -1,0 +1,46 @@
+.header__select {
+  &.nice-select {
+    height: 40px;
+    font-size: 16px;
+    &::after {
+        border-color: $darkestBlueDecorative;
+        @include min_1440 {
+            height: 10px;
+            width: 10px;
+        }
+    }
+    @include max_1023 {
+      margin-top: -23px;
+    }
+    @include min_1024 {
+        margin-left: -4px;
+        height: 50px;
+        padding-top: 5px;
+    }
+    @include min_1440 {
+        height: 60px;
+        font-size: 20px;
+        padding-top: 10px;
+    }
+    & > .current {
+      color: $darkestBlueDecorative;
+    }
+    & > .nice-select-dropdown {
+      width: 100%;
+      background-color: $lightBcgYellow;
+      border: 2px solid $blueBcgLightest;
+      & > .nice-select-search-box {
+        background-color: $blueBcgLightest;
+        & > .nice-select-search::placeholder {
+          color: $darkestYellow;
+          @include min_1024 {
+            font-size: 16px;
+          }
+          @include min_1440 {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+}
