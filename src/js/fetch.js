@@ -1,6 +1,8 @@
 import axios from 'axios';
 
 const URL_FOR_POKEMON = 'https://pokeapi.co/api/v2/pokemon';
+const URL_FOR_ABILITY = 'https://pokeapi.co/api/v2/ability';
+
 
 const fetchPokemons = async (limitNum, offsetNum) => {
     const searchFilters = new URLSearchParams({
@@ -16,8 +18,19 @@ const fetchOnePokemon = async (name) => {
     return response.data
 }
 
-// fetchPokemons(20, 20).then(r => console.log(r.results))
+const fetchAbilities = async () => {
+    const searchFilters = new URLSearchParams({
+        limit: 357,
+        offset: 1
+    });
+    const response = await axios.get(`${URL_FOR_ABILITY}/?${searchFilters}`)
+    return response.data;
+}
 
-fetchOnePokemon('slurpuff').then(r => console.log(r))
+const fetchAbility = async (abilityName) => {
+    const response = await axios.get(`${URL_FOR_ABILITY}/${abilityName}/`);
+    return response.data
+}
 
-export {fetchPokemons, fetchOnePokemon};
+fetchAbilities().then(r => console.log(r))
+export {fetchPokemons, fetchOnePokemon, fetchAbility, fetchAbilities};
