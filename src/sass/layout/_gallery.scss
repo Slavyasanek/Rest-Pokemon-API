@@ -1,6 +1,10 @@
 .gallery {
   padding-top: 40px;
   padding-bottom: 40px;
+  @include min_1440 {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
   &--flex {
     display: flex;
     flex-direction: column;
