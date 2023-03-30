@@ -1,3 +1,4 @@
+import throttle from 'lodash.throttle';
 import Notiflix, { Notify } from 'notiflix';
 
 const noSuccess = () => {
@@ -43,13 +44,14 @@ Notiflix.Notify.init({
     },
 })
 
-const infoAbility = (abilities) => {
+const infoAbility = (sum, abilities) => {
     return Notiflix.Notify.info(
-        `We found pokemons with ${abilities} abilities`,
+        `We found ${sum} pokemons with ${abilities} abilities`,
         {
             cssAnimationStyle: 'zoom',
             closeButton: true,
         });
 }
+
 
 export { noSuccess, successFind, tooMuchPokemonsFound, errorNotify, infoAbility };
