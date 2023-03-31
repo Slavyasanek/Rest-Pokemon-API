@@ -1,0 +1,51 @@
+body.lock {
+    overflow: hidden;
+  }
+  
+  // backdrop
+  .popup {
+    visibility: hidden;
+    position: fixed;
+    pointer-events: none;
+    z-index: 100;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(41, 48, 61, 0.2);
+    backdrop-filter: blur(2px);
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: all 0.8s ease 0s;
+  
+    &.open {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: all;
+  
+      .popup__content {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+  }
+
+
+.modal {
+  &__body {
+    background-color: $skyBlue;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    width: calc(100vw);
+  }
+  &__images {
+    display: flex;
+list-style: none;
+flex-wrap: wrap;
+  }
+}

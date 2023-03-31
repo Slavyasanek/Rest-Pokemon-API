@@ -38,5 +38,4 @@ const fetchType = async (typeName) => {
     return response.data;
 }
 
-fetch('https://pokeapi.co/api/v2/type/poison').then(r => r.json()).then(r => console.log(r));
 export {fetchPokemons, fetchOnePokemon, fetchAbility, fetchAbilities, fetchType };

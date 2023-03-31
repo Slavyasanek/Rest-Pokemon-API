@@ -100,16 +100,20 @@ const loadMore = (array) => {
 
     if (thershold >= heightOfBody && shouldLoad) {
         totalFounds -=1;
+        firstElFound += 20;
+        lastElFound += 20;
+
         if (totalFounds === 0) {
             shouldLoad = false;
-            console.log('this is end');
+            firstElFound = 0;
+            lastElFound = 19;
+
             endOfLoad();
             return;
         } else {
-            array.slice(firstElFound + 20, lastElFound + 20).forEach(poke => {
+            array.slice(firstElFound, lastElFound).forEach(poke => {
                 fetchOnePokemon(poke.pokemon.name)
                 .then(data => {
-                    shouldLoad = true;
                     const post = renderGallery(data);
                     pokemonsGallery.insertAdjacentHTML("beforeend", post);
                 }).catch(e => noSuccess())
@@ -119,7 +123,6 @@ const loadMore = (array) => {
 }
 
 const endOfLoad = () => {
-    window.removeEventListener("scroll", throttle(() => loadMore(), 1000));
     return Notiflix.Notify.info(
         `That's all we were able to found. Hope we helped you!`,
         {
@@ -128,19 +131,22 @@ const endOfLoad = () => {
         });
 }
 
-export const searchByType = () => {
+const searchByType = () => {
     fetchType(searchForm.string.value.toLowerCase())
     .then(r => {
+        successFind(r.pokemon.length);
+        const loadMoreThrottled = throttle(() => loadMore(r.pokemon), 1000)
+        window.removeEventListener("scroll", loadMoreThrottled)
         pokemonsGallery.innerHTML = "";
-        const pokeTypes = r.pokemon;
-        successFind(pokeTypes.length);
-        if (pokeTypes.length > 20) {
-            totalFounds = Math.ceil((pokeTypes.length / 20) - 1);
-            window.addEventListener("scroll", throttle(() => loadMore(pokeTypes), 1000));
+        if (r.pokemon.length > 20) {
+            shouldLoad = true;
+            totalFounds = Math.ceil(r.pokemon.length / 20);
+            window.addEventListener("scroll", loadMoreThrottled);
         }
-        pokeTypes.slice(firstElFound, lastElFound).forEach(poke => {
+        r.pokemon.slice(firstElFound, lastElFound).forEach(poke => {
             fetchOnePokemon(poke.pokemon.name)
             .then(data => {
+                r.pokemon.slice(0, 20);
                 const post = renderGallery(data);
                 pokemonsGallery.insertAdjacentHTML("beforeend", post);
             }).catch(e => noSuccess())
