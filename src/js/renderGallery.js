@@ -22,7 +22,7 @@ export const renderGallery = ({ id, name, sprites, abilities, types }) => {
             ${typesList}
         </ul>
     </div> </div>
-    <button data-popup-btn="book-table" class="popup-link blue--transparent card__btn">View more</button>
+    <button class="popup-link blue--transparent card__btn">View more</button>
     </li>`;
     return poky;
 }

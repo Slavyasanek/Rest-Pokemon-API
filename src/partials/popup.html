@@ -1,47 +1,44 @@
 <div class="popup">
-    <div class="modal__body">
-      <div class="popup__content modal__content">
-        <button type="button" class="modal__close close-popup">
-            <svg width="40" height="40">
-                <use href="./images/icons.svg#icon-close"></use>
-            </svg>
-        </button>
-        <h1 class="modal__title pokemon-name">Pokemon: Ditto</h1>
-        <div class="modal__images">
-            <!-- <div class="modal__images-item">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png" alt="">
-                <p class="modal__images-descr">front default
-                </p>
-            </div>
-            <div class="modal__images-item">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/132.png" alt="">
-                <p class="modal__images-descr">back default</p>
-            </div>
-            <div class="modal__images-item">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/132.png" alt="">
-                <p class="modal__images-descr">front shiny</p>
-            </div>
-            <div class="modal__images-item">
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/132.png" alt="">
-                <p class="modal__images-descr">back shiny</p>
-            </div> -->
-        </div>
-        <ul class="modal__short-descr js-short-descr">
-            <li class="modal__main-item">id: 1220</li>
-            <li class="modal__main-item">Base experience: 333</li>
-            <li class="modal__main-item">Height: 11</li>
-            <li class="modal__main-item">Weight: 11</li>
-            <li class="modal__main-item">Order: 33</li>
+  <div class="modal__body">
+    <button type="button" class="modal__close close-popup" data-popup-close>
+      <svg width="40" height="40">
+        <use href="./images/icons.svg#icon-close"></use>
+      </svg>
+    </button>
+    <div class="popup__content modal__content">
+      <h1 class="modal__title pokemon-name"></h1>
+      <div class="modal__details">
+        <ul class="modal__short-descr">
+          <li>Id: <span class="quality js-id"></span></li>
+          <li>Base experience: <span class="quality js-exper"></span></li>
+          <li>Height: <span class="quality js-height"></span></li>
+          <li>Weight: <span class="quality js-weight"></span></li>
+          <li>Order: <span class="quality js-order"></span></li>
         </ul>
         <div class="modal__long-descr">
+          <div class="modal__stuff">
             <h2 class="modal__subtitle">Abilitites</h2>
-            <ul class="modal__list js-abilities">
-                <li class="modal__item">lu</li>
-                <li class="modal__item">zhu</li>
-                <li class="modal__item">nu</li>
-            </ul>
-        </div>        
-        </form>
+            <ul class="modal__list js-abilities"></ul>
+          </div>
+          <div class="modal__stuff">
+            <h2 class="modal__subtitle">Types</h2>
+            <ul class="modal__list js-types"></ul>
+          </div>
+        </div>
+        <h2 class="modal__subtitle">Stats</h2>
+        <table class="modal__stats">
+        <thead>
+            <tr>
+                <th>Stat</th>
+                <th>effort</th>
+                <th>Stat base</th>
+            </tr>
+        </thead>
+            <tbody class="js-stats">
+        </tbody>
+    </table>
       </div>
+      <ul class="modal__images"></ul>
     </div>
   </div>
+</div>
