@@ -169,6 +169,20 @@ body.lock {
       margin-bottom: 20px;
     }
   }
+  &__moves {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    &-item {
+      color: $typeFont;
+      background-color: $darkestYellow;
+      padding: 4px;
+      border-radius: 3px;
+    }
+  }
 }
 
 .quality {

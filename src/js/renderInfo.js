@@ -13,6 +13,7 @@ const qualityItems = {
     pokieAbilities: document.querySelector('.js-abilities'),
     types: document.querySelector('.js-types'),
     stats: document.querySelector('.js-stats'),
+    moves: document.querySelector('.js-moves'),
 }
 
 
@@ -33,7 +34,11 @@ export const renderCard = (data) => {
 
     nameHandler.textContent = name;
     qualityItems.id.textContent = id;
-    qualityItems.experience.textContent = base_experience;
+    if (base_experience !== null) {
+        qualityItems.experience.textContent = base_experience;
+    } else {
+        qualityItems.experience.textContent = `unevaluated yet`;
+    }
     qualityItems.height.textContent = height;
     qualityItems.weight.textContent = weight;
     qualityItems.order.textContent = order;
@@ -55,6 +60,10 @@ export const renderCard = (data) => {
     </tr>`
     }).join("");
     qualityItems.stats.innerHTML = statTable;
+    const movesEdit = moves.map(({move}) => {
+        return `<li class="modal__moves-item">${move.name}</li>`
+    }).join("")
+    qualityItems.moves.innerHTML = movesEdit;
 }
 
 export const cleanCard = () => {
