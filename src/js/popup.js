@@ -25,7 +25,6 @@ function popupClose() {
     document.body.classList.remove('lock');
     modal.classList.remove('open')
     setTimeout(cleanCard, 800);
-    cleanCard();
 }
 
 popupCloseBtn.addEventListener("click", popupClose);

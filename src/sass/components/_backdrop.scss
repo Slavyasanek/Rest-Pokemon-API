@@ -36,18 +36,27 @@ body.lock {
   &__body {
     background-color: $skyBlue;
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 40px 20px;
+    padding: 20px;
     width: 100%;
     height: 100vh;
     min-width: 320px;
     overflow-y: scroll;
     border: 8px solid $darkestBlueDecorative;
   }
+  &__content {
+    @include min_768 {
+      max-width: 768px;
+      margin: 0 auto;
+    }
+    @include min_1024 {
+      max-width: 1024px;
+    }
+    @include min_1440 {
+      max-width: 1440px;
+    }
+  }
   &__close {
-    position: absolute;
+    position: fixed;
     top: 10px;
     right: 10px;
     width: 40px;
@@ -77,24 +86,32 @@ body.lock {
       width: 50px;
       height: 50px;
     }
+    @include min_1024 {
+      width: 60px;
+      height: 60px;
+    } 
   }
   &__title {
     text-transform: capitalize;
     color: $modalTitle;
     text-align: center;
     margin-bottom: 20px;
+    @include min_1024 {
+      font-size: 40px;
+      margin-bottom: 30px;
+    }
   }
   &__subtitle {
     margin-bottom: 10px;
     color: $darkestBlueDecorative;
     font-size: 24px;
+    text-align: center;
   }
   &__short-descr {
     display: flex;
     flex-direction: column;
     gap: 7px;
-    // margin-bottom: 20px;
-      font-size: 18px;
+    font-size: 18px;
   }
   &__list {
     display: flex;
@@ -102,12 +119,17 @@ body.lock {
     gap: 7px;
   }
   &__long-descr {
-    margin-top: 20px;
-    margin-bottom: 20px;
     display: flex;
     flex-direction: row;
     gap: 30px;
     flex-wrap: wrap;
+    @include min_768 {
+      gap: 100px;
+    }
+    @include max_1023 {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
   }
   &__item {
     font-size: 18px;
@@ -132,6 +154,20 @@ body.lock {
       width: calc(100% / 3);
       padding: 4px;
     }
+    @include min_1024 {
+      width: 768px;
+      margin: 0 auto;
+      margin-bottom: 20px;
+    }
+  }
+  &__details {
+    @include min_1024 {
+      display: flex;
+      flex-direction: row;
+      gap: 100px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
   }
 }
 
@@ -146,6 +182,7 @@ body.lock {
 .modal {
   &__images {
     display: flex;
+    justify-content: center;
     list-style: none;
     flex-wrap: wrap;
     margin: -5px;
@@ -175,7 +212,8 @@ body.lock {
         width: calc((100% - 10 * 5px) / 5);
       }
       @include min_1440 {
-        width: calc((100% - 14 * 5px) / 7);      }
+        width: calc((100% - 14 * 5px) / 7);
+      }
     }
     &-descr {
       @include max_767 {

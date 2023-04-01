@@ -27,7 +27,7 @@ const renderItems = (array) => {
 }
 
 export const renderCard = (data) => {
-    const { abilities, base_experience, game_indices,
+    const { abilities, base_experience,
         height, held_items, id, sprites, moves, name, order, stats, types, weight
     } = data;
 
@@ -61,7 +61,7 @@ export const cleanCard = () => {
     nameHandler.textContent = "";
     imagesHandler.innerHTML = "";
     for (const item in qualityItems) {
-        item.textContent = "";
+        item.innerHTML = "";
     }
     const heldItems = document.querySelector('.js-held-items');
     if (heldItems) {
