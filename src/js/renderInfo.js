@@ -3,6 +3,11 @@ const imagesHandler = document.querySelector('.modal__images');
 const longDescr = document.querySelector('.modal__long-descr');
 import { renderImages } from "./renderImages";
 
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
+
+let simplelightbox;
+
 
 const qualityItems = {
     id: document.querySelector('.js-id'),
@@ -14,6 +19,16 @@ const qualityItems = {
     types: document.querySelector('.js-types'),
     stats: document.querySelector('.js-stats'),
     moves: document.querySelector('.js-moves')
+}
+
+const renderSimpleLightBox = () => {
+    simplelightbox = new SimpleLightbox('.modal__images a', {
+        captionsData: 'alt',
+        captionDelay: 250,
+        captionPosition: 'bottom',
+        scaleImageToRatio: true,
+        widthRatio: 0.8,
+    }).refresh();
 }
 
 
@@ -44,7 +59,7 @@ export const renderCard = (data) => {
     qualityItems.order.textContent = order;
 
     imagesHandler.innerHTML = renderImages(sprites)
-
+    renderSimpleLightBox();
     qualityItems.pokieAbilities.innerHTML = abilities.map(ability => {
         return `<li class="modal__item"> &#9734; ${ability.ability.name}</li>`
     }).join("")

@@ -3,7 +3,7 @@ export const renderImages = (data) => {
     const updatedImages = images.map(image => {
         if (image[1] !== null) {
             if (typeof image[1] === 'string') {
-                return `<li class="modal__images-item"><img src="${image[1]}" alt="${image[0]}"><div class="modal__images-descr"><p>${image[0].replaceAll("_", " ")}</p></div></li>`
+                return `<li class="modal__images-item"><a href="${image[1]}"><img src="${image[1]}" alt="${image[0]}"></a><div class="modal__images-descr"><p>${image[0].replaceAll("_", " ")}</p></div></li>`
             }
         }
     }).join("")
@@ -12,6 +12,7 @@ export const renderImages = (data) => {
     const allimgs = updatedImages.concat(otherImages, versionImages);
     return allimgs;
 }
+
 
 const renderObjImages = (arrayType) => {
     const reimage = [];
@@ -24,13 +25,13 @@ const renderObjImages = (arrayType) => {
                 let curObj = item[1][key];
                 for (const key in curObj) {
                     if (curObj[key] !== null && typeof curObj[key] !== `object`) {
-                        reimage.push(`<li class="modal__images-item"><img src="${curObj[key]}" alt="${key}"><div class="modal__images-descr">
+                        reimage.push(`<li class="modal__images-item"><a href="${curObj[key]}"><img src="${curObj[key]}" alt="${key}"></a><div class="modal__images-descr">
                         <p>${curDepartName} &#9790; ${curName} &#9790; ${key.replaceAll("_", " ")}</p></div></li>`)
                     }
                 }
             } else {
                 if (item[1][key] !== null) {
-                    reimage.push(`<li class="modal__images-item"><img src="${item[1][key]}" alt="${key}"><div class="modal__images-descr">
+                    reimage.push(`<li class="modal__images-item"><a href="${item[1][key]}"><img src="${item[1][key]}" alt="${key}"></a><div class="modal__images-descr">
                     <p>${item[0]} &#9790; ${key.replaceAll("_", " ")}</p></div></li>`)
                 }
             }
