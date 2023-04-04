@@ -8,7 +8,6 @@ const modal = document.querySelector('.popup')
 const renderInfo = async () => {
     const pokieID = event.target.closest('li').dataset.pokemon;
     const pok = await fetchOnePokemon(pokieID);
-    console.log(pok)
     renderCard(pok);
 }
 

@@ -134,7 +134,6 @@ const searchByType = async () => {
     const typefetching = await fetchType(searchForm.string.value.toLowerCase());
     const curPokemons = typefetching.pokemon;
     successFind(curPokemons.length);
-    console.log(curPokemons)
     if (curPokemons.length > 20) {
         shouldLoad = true;
         totalFounds = Math.ceil(curPokemons.length / 20);
