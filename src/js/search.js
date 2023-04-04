@@ -11,6 +11,7 @@ let shouldLoad = true;
 let totalFounds;
 let firstElFound = 0;
 let lastElFound = 19;
+let throttled;
 
 const searchByName = () => {
     fetchPokemons(1280, 1)
@@ -43,51 +44,51 @@ const searchByName = () => {
                 }).catch(e => errorNotify())
             }
         }
-    );
+        );
 }
 
 const searchByAbility = () => {
     fetchAbilities()
-    .then(({results}) => {
-        let similiarFounds = [];
-        results.forEach(({name}) => {
-            if (name.includes(searchForm.string.value)) {
-                similiarFounds.push(name);
-            }
-        })
-        if (similiarFounds.length > 5) {
-            tooMuchPokemonsFound();
-            return;
-        } else if (similiarFounds.length === 0) {
-            noSuccess();
-            return;
-        } else {
-            let promises = [];
-            similiarFounds.map(request => {
-                promises.push(fetchAbility(request).then(data => data))
-            })
-            Promise.all(promises).then(data => {
-                const pokemonsFound = [];
-                data.flatMap(data => (data.pokemon.forEach(pokie => pokemonsFound.push(pokie))))
-                if (pokemonsFound.length > 40) {
-                    tooMuchPokemonsFound();
-                    return;
-                } else {
-                    infoAbility(pokemonsFound.length, similiarFounds.join(", "));
-                    pokemonsGallery.innerHTML = "";
-                    const pokieNames = pokemonsFound.map(pokie => pokie.pokemon.name);
-                    pokieNames.forEach(pokie => {
-                        fetchOnePokemon(pokie)
-                        .then(d => {
-                            const post = renderGallery(d);
-                            pokemonsGallery.insertAdjacentHTML("beforeend", post);
-                        })
-                    })
+        .then(({ results }) => {
+            let similiarFounds = [];
+            results.forEach(({ name }) => {
+                if (name.includes(searchForm.string.value)) {
+                    similiarFounds.push(name);
                 }
             })
+            if (similiarFounds.length > 5) {
+                tooMuchPokemonsFound();
+                return;
+            } else if (similiarFounds.length === 0) {
+                noSuccess();
+                return;
+            } else {
+                let promises = [];
+                similiarFounds.map(request => {
+                    promises.push(fetchAbility(request).then(data => data))
+                })
+                Promise.all(promises).then(data => {
+                    const pokemonsFound = [];
+                    data.flatMap(data => (data.pokemon.forEach(pokie => pokemonsFound.push(pokie))))
+                    if (pokemonsFound.length > 40) {
+                        tooMuchPokemonsFound();
+                        return;
+                    } else {
+                        infoAbility(pokemonsFound.length, similiarFounds.join(", "));
+                        pokemonsGallery.innerHTML = "";
+                        const pokieNames = pokemonsFound.map(pokie => pokie.pokemon.name);
+                        pokieNames.forEach(pokie => {
+                            fetchOnePokemon(pokie)
+                                .then(d => {
+                                    const post = renderGallery(d);
+                                    pokemonsGallery.insertAdjacentHTML("beforeend", post);
+                                })
+                        })
+                    }
+                })
 
-        }
-    })
+            }
+        })
 }
 
 
@@ -99,7 +100,7 @@ const loadMore = (array) => {
     const thershold = scrolled + screenHeight;
 
     if (thershold >= heightOfBody && shouldLoad) {
-        totalFounds -=1;
+        totalFounds -= 1;
         firstElFound += 20;
         lastElFound += 20;
 
@@ -111,12 +112,9 @@ const loadMore = (array) => {
             endOfLoad();
             return;
         } else {
-            array.slice(firstElFound, lastElFound).forEach(poke => {
-                fetchOnePokemon(poke.pokemon.name)
-                .then(data => {
-                    const post = renderGallery(data);
-                    pokemonsGallery.insertAdjacentHTML("beforeend", post);
-                }).catch(e => noSuccess())
+            array.slice(firstElFound, lastElFound).map(async poke => {
+                const getPok = await fetchOnePokemon(poke.pokemon.name);
+                pokemonsGallery.insertAdjacentHTML("beforeend", renderGallery(getPok))
             })
         }
     }
@@ -131,38 +129,34 @@ const endOfLoad = () => {
         });
 }
 
-const searchByType = () => {
-    fetchType(searchForm.string.value.toLowerCase())
-    .then(r => {
-        successFind(r.pokemon.length);
-        const loadMoreThrottled = throttle(() => loadMore(r.pokemon), 1000)
-        window.removeEventListener("scroll", loadMoreThrottled)
-        pokemonsGallery.innerHTML = "";
-        if (r.pokemon.length > 20) {
-            shouldLoad = true;
-            totalFounds = Math.ceil(r.pokemon.length / 20);
-            window.addEventListener("scroll", loadMoreThrottled);
-        }
-        r.pokemon.slice(firstElFound, lastElFound).forEach(poke => {
-            fetchOnePokemon(poke.pokemon.name)
-            .then(data => {
-                r.pokemon.slice(0, 20);
-                const post = renderGallery(data);
-                pokemonsGallery.insertAdjacentHTML("beforeend", post);
-            }).catch(e => noSuccess())
-        })
-    }).catch(e => noSuccess())
+const searchByType = async () => {
+    window.removeEventListener("scroll", throttled);
+    const typefetching = await fetchType(searchForm.string.value.toLowerCase());
+    const curPokemons = typefetching.pokemon;
+    successFind(curPokemons.length);
+    console.log(curPokemons)
+    if (curPokemons.length > 20) {
+        shouldLoad = true;
+        totalFounds = Math.ceil(curPokemons.length / 20);
+        throttled = throttle(() => loadMore(curPokemons), 300);
+        window.addEventListener("scroll", throttled);
+    }
+    pokemonsGallery.innerHTML = "";
+    curPokemons.slice(firstElFound, lastElFound).map(async poke => {
+        const getPok = await fetchOnePokemon(poke.pokemon.name);
+        return pokemonsGallery.insertAdjacentHTML("beforeend", renderGallery(getPok));
+    })
 }
 
 const searchPokys = (event) => {
     event.preventDefault();
     const curOption = searchForm.search.value;
-    if ( curOption === 'pokemon') {
+    if (curOption === 'pokemon') {
         searchByName();
     } else if (curOption === 'ability') {
         searchByAbility();
     } else if (curOption === 'type') {
-        searchByType();
+        searchByType().catch(e => noSuccess());
     }
 }
 

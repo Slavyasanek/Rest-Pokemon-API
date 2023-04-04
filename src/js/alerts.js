@@ -49,6 +49,7 @@ const infoAbility = (sum, abilities) => {
         `We found ${sum} pokemons with ${abilities} abilities`,
         {
             cssAnimationStyle: 'zoom',
+            timeout: 4000,
             closeButton: true,
         });
 }
