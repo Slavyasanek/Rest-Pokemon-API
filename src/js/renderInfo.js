@@ -13,7 +13,7 @@ const qualityItems = {
     pokieAbilities: document.querySelector('.js-abilities'),
     types: document.querySelector('.js-types'),
     stats: document.querySelector('.js-stats'),
-    moves: document.querySelector('.js-moves'),
+    moves: document.querySelector('.js-moves')
 }
 
 
@@ -70,10 +70,12 @@ export const cleanCard = () => {
     nameHandler.textContent = "";
     imagesHandler.innerHTML = "";
     for (const item in qualityItems) {
-        item.innerHTML = "";
+        if (qualityItems[item]) {
+            qualityItems[item].innerHTML = "";
+        }
     }
     const heldItems = document.querySelector('.js-held-items');
-    if (heldItems) {
+    if (heldItems !== null) {
         heldItems.remove();
     }
 }
