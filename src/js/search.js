@@ -98,7 +98,6 @@ const loadMore = (array) => {
     const scrolled = window.pageYOffset;
 
     const thershold = scrolled + screenHeight;
-
     if (thershold >= heightOfBody && shouldLoad) {
         totalFounds -= 1;
         firstElFound += 20;
@@ -121,6 +120,7 @@ const loadMore = (array) => {
 }
 
 const endOfLoad = () => {
+    window.removeEventListener("scroll", throttled);
     return Notiflix.Notify.info(
         `That's all we were able to found. Hope we helped you!`,
         {
