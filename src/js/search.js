@@ -4,6 +4,7 @@ import { tooMuchPokemonsFound, noSuccess, successFind, errorNotify, infoAbility 
 import { renderGallery } from "./renderGallery";
 import Notiflix from "notiflix";
 import throttle from "lodash.throttle";
+import { finishLoad, loadItems } from "./loadNotiflix";
 
 const searchForm = document.querySelector('.header__search');
 
@@ -14,6 +15,7 @@ let lastElFound = 19;
 let throttled;
 
 const searchByName = () => {
+    loadItems();
     fetchPokemons(1280, 1)
         .then(({ results }) => {
             let similiarFounds = [];
@@ -45,9 +47,11 @@ const searchByName = () => {
             }
         }
         );
+        finishLoad();
 }
 
 const searchByAbility = () => {
+    loadItems();
     fetchAbilities()
         .then(({ results }) => {
             let similiarFounds = [];
@@ -89,6 +93,7 @@ const searchByAbility = () => {
 
             }
         })
+        finishLoad();
 }
 
 
@@ -130,6 +135,7 @@ const endOfLoad = () => {
 }
 
 const searchByType = async () => {
+    loadItems();
     window.removeEventListener("scroll", throttled);
     const typefetching = await fetchType(searchForm.string.value.toLowerCase());
     const curPokemons = typefetching.pokemon;
@@ -145,6 +151,7 @@ const searchByType = async () => {
         const getPok = await fetchOnePokemon(poke.pokemon.name);
         return pokemonsGallery.insertAdjacentHTML("beforeend", renderGallery(getPok));
     })
+    finishLoad();
 }
 
 const searchPokys = (event) => {
@@ -155,7 +162,7 @@ const searchPokys = (event) => {
     } else if (curOption === 'ability') {
         searchByAbility();
     } else if (curOption === 'type') {
-        searchByType().catch(e => noSuccess());
+        searchByType().catch(e => noSuccess(), finishLoad());
     }
 }
 

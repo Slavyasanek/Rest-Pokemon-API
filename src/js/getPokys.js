@@ -1,4 +1,5 @@
 import { fetchOnePokemon, fetchPokemons } from "./fetch";
+import { finishLoad, loadItems } from "./loadNotiflix";
 import { getRandomNum } from "./randomNum";
 import { renderGallery } from "./renderGallery";
 
@@ -18,12 +19,16 @@ const getPokys = async (offsetNum) => {
 }
 
 window.addEventListener("load", () => {
+    loadItems()
     const page = getRandomNum(1200, 1)
     getPokys(page)
+    finishLoad();
 })
 
 btnRandomPokemons.addEventListener("click", () => {
+    loadItems();
     pokemonsGallery.innerHTML = "";
     const page = getRandomNum(1000, 1);
     getPokys(page)
+    finishLoad();
 })
