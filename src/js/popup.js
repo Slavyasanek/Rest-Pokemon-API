@@ -1,5 +1,6 @@
 import { fetchOnePokemon } from "./fetch";
 import { pokemonsGallery } from "./getPokys"
+import { finishLoad, loadItems } from "./loadNotiflix";
 import { renderCard, cleanCard } from "./renderInfo";
 
 const popupCloseBtn = document.querySelector('[data-popup-close]');
@@ -12,12 +13,14 @@ const renderInfo = async () => {
 }
 
 function popupOpen() {
+    loadItems()
     if (event.target.nodeName !== 'BUTTON') {
         return;
     }
     renderInfo();
     document.body.classList.add('lock');
     modal.classList.add('open')
+    finishLoad();
 }
 
 function popupClose() {
