@@ -15,3 +15,40 @@
         color: $darkestYellow;
     }
 }
+
+.icon-top {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background-color: $skyBlue;
+    padding: 8px;
+    border-radius: 50%;
+    border: 2px solid $greyBlue;
+    pointer-events: none;
+    opacity: 0;
+    cursor: pointer;
+    transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    & > svg {
+        fill: $typeFont;
+        transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    &.shown {
+        opacity: 1;
+        pointer-events: all;
+    }
+    &:hover, &:focus, &:active {
+        background-color: $greyYellow;
+        border-color: $darkestYellow;
+    }
+    @include min_768 {
+        padding: 10px;
+        & > svg {
+            height: 30px;
+            width: 30px;
+        }
+    }
+    @include min_1440 {
+        right: 20px;
+        bottom: 20px;
+    }
+}
