@@ -29,6 +29,16 @@ function popupClose() {
     setTimeout(cleanCard, 200);
 }
 
+function escClose (event) {
+    if (event.code !== "Escape") {
+        return;
+    } else {
+        popupClose();
+    }
+}
+
+window.addEventListener("keydown", escClose)
+
 popupCloseBtn.addEventListener("click", popupClose);
 
 pokemonsGallery.addEventListener("click", popupOpen)
