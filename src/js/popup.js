@@ -13,10 +13,10 @@ const renderInfo = async () => {
 }
 
 function popupOpen() {
-    loadItems()
     if (event.target.nodeName !== 'BUTTON') {
         return;
     }
+    loadItems();
     renderInfo();
     document.body.classList.add('lock');
     modal.classList.add('open')
